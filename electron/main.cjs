@@ -45,6 +45,10 @@ ipcMain.handle("get-time", () => {
   return Math.max(0, end_time - Date.now());
 });
 
+ipcMain.handle('show-rules',()=>{
+  
+})
+
 app.whenReady().then(() => {
   createWindow();
 });

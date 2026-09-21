@@ -38,8 +38,9 @@ function App() {
   }
 
   async function startTest() {
-    await window.electronAPI.startTest();
-    setStarted(true);
+    await window.electronAPI.startTest()
+    // await window.electronAPI.startTest();
+    // setStarted(true);
   }
 
   function formatTimeLeft(ms) {
