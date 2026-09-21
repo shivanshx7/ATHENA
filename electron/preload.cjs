@@ -5,4 +5,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getRemainingTime: () => ipcRenderer.invoke("get-time"),
   startTest: () => ipcRenderer.invoke("start-test"),
   showExamRules:() => ipcRenderer.invoke("show-rules"),
+  captureImage:()=>ipcRenderer.invoke("capture"),
 });

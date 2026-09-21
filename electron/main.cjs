@@ -2,9 +2,11 @@ const {
   BrowserWindow,
   app,
   ipcMain,
+  dialog,
 } = require("electron");
 
 const path = require("path");
+const { hang } = require("process");
 
 let win = null;
 let end_time = null;
@@ -45,7 +47,22 @@ ipcMain.handle("get-time", () => {
   return Math.max(0, end_time - Date.now());
 });
 
-ipcMain.handle('show-rules',()=>{
+ipcMain.handle('show-rules',async ()=>{
+    const res = await dialog.showMessageBox(win, {
+      type:"info",
+      title:"Exam Rules",
+      message:"please follow this things",
+      detail:`
+      1.Do not open any new tab
+      2.You will get 0 marks if you cheat
+      `,
+      buttons:["Accept","Cancel"]
+    })
+    console.log(res)
+    return res.response
+})
+
+ipcMain.handle('capture',async ()=>{
   
 })
 

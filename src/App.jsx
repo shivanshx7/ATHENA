@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const videoRef = useRef(null);
-
+  const ImageCaptureRef = useRef(null)
   const [time, setTime] = useState(0);
   const [started, setStarted] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
@@ -30,7 +30,14 @@ function App() {
 
     videoRef.current.srcObject = videoData;
 
+    const track = videoData.getVideoTracks()[0]
+    ImageCaptureRef.current = new ImageCapture(track)
+
     setCameraReady(true);
+  }
+  function clickPhoto(){
+    const result = ImageCaptureRef.current.takePhoto()
+    console.log(result)
   }
 
   async function getFullscreen() {
@@ -38,7 +45,7 @@ function App() {
   }
 
   async function startTest() {
-    await window.electronAPI.startTest()
+    await window.electronAPI.showExamRules()
     // await window.electronAPI.startTest();
     // setStarted(true);
   }
