@@ -7,7 +7,7 @@ const {
 
 const path = require("path");
 const { hang } = require("process");
-
+const fs = require("fs")
 let win = null;
 let end_time = null;
 
@@ -62,8 +62,10 @@ ipcMain.handle('show-rules',async ()=>{
     return res.response
 })
 
-ipcMain.handle('capture',async ()=>{
-  
+ipcMain.handle('save-photo',async (_,arrayBuffer)=>{
+  const filePath = path.join(__dirname,'cameraFeed',`${Date.now()}.jpg`)
+  const buffer = Buffer.from(arrayBuffer);
+  fs.writeFileSync(filePath,buffer)
 })
 
 app.whenReady().then(() => {

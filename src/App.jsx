@@ -16,10 +16,7 @@ function App() {
   useEffect(() => {
     if (!started) return;
 
-    const interval = setInterval(() => {
-      getLaspedTime();
-    }, 1000);
-
+    const interval = setInterval(()=>clickPhoto(),5000)
     return () => clearInterval(interval);
   }, [started]);
 
@@ -31,14 +28,18 @@ function App() {
     videoRef.current.srcObject = videoData;
 
     const track = videoData.getVideoTracks()[0]
+    // console.log(track)
     ImageCaptureRef.current = new ImageCapture(track)
 
     setCameraReady(true);
   }
-  function clickPhoto(){
-    const result = ImageCaptureRef.current.takePhoto()
-    console.log(result)
+  async function clickPhoto(){
+    const blob = await ImageCaptureRef.current.takePhoto()
+    const buffer = await blob.arrayBuffer()
+    await window.electronAPI.savePhoto(buffer)
+    console.log(blob)
   }
+
 
   async function getFullscreen() {
     await window.electronAPI.setFullScreen();
@@ -46,9 +47,12 @@ function App() {
 
   async function startTest() {
     await window.electronAPI.showExamRules()
-    // await window.electronAPI.startTest();
+    await window.electronAPI.startTest();
+    setStarted(true)
+    
     // setStarted(true);
   }
+
 
   function formatTimeLeft(ms) {
     const seconds = Math.floor((ms / 1000) % 60)
