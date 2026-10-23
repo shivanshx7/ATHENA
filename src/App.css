@@ -439,3 +439,148 @@ appearing in the layout.
 
   cursor: not-allowed;
 }
+/* --- Exam Details Page Container --- */
+.exam-details-page {
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* --- Back Button --- */
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+/* --- Exam Card Container --- */
+.exam-card {
+  max-width: 650px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* --- Card Header (Green Banner) --- */
+.exam-card-header {
+  height: 140px;
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2dfdb 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.clipboard-icon {
+  background-color: #0b7a54;
+  color: white;
+  font-size: 40px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 8px solid white; /* Creates the white ring effect */
+}
+
+/* --- Card Body & Typography --- */
+.exam-card-body {
+  padding: 32px;
+}
+
+.exam-section {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #8a8a8a;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.title-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.description-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- Stats Section (Date, Questions, XP) --- */
+.exam-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.stat-icon {
+  background-color: #f7f7f7;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.stat-item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* --- Start Test Button --- */
+.btn-start-test {
+  background-color: #0b7a54;
+  color: white;
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-start-test:hover {
+  background-color: #096344;
+}
