@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import quizData from "../quiz/quiz.json";
 
 function App() {
   const videoRef = useRef(null);
@@ -10,6 +11,11 @@ function App() {
   
   // New state to toggle the Exam Details page
   const [showExamDetails, setShowExamDetails] = useState(false);
+
+  // Quiz state
+  const questions = Array.isArray(quizData) ? quizData : quizData.questions || [];
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
 
   async function getLaspedTime() {
     try {
@@ -101,6 +107,8 @@ function App() {
     return `${hours}:${minutes}:${seconds}`;
   }
 
+  const currentQuestion = questions[currentQuestionIndex];
+
   // View 2: Exam Details Screen
   if (showExamDetails && !started) {
     return (
@@ -137,7 +145,7 @@ function App() {
                 <span className="stat-icon">📝</span>
                 <div>
                   <span className="label">NUMBER OF QUESTIONS</span>
-                  <p>5 Questions</p>
+                  <p>{questions.length} Questions</p>
                 </div>
               </div>
               <div className="stat-item">
@@ -217,7 +225,70 @@ function App() {
         </div>
       )}
       
-      {started && <p className="timer-display">Time Left : {formatTimeLeft(time)}</p>}
+      {started && (
+        <div className="exam-page">
+          <div className="exam-container">
+            <div className="exam-header">
+              <h3>Time Left : {formatTimeLeft(time)}</h3>
+            </div>
+
+            {currentQuestion ? (
+              <div className="question-card">
+                <h2>
+                  QUESTION {currentQuestionIndex + 1} OF {questions.length}
+                </h2>
+                <p>{currentQuestion.question || currentQuestion.title}</p>
+
+                <div className="options-container">
+                  {(currentQuestion.options || currentQuestion.choices || []).map(
+                    (option, index) => (
+                      <label key={index} className="option-row">
+                        <input
+                          type="radio"
+                          name={`question-${currentQuestionIndex}`}
+                          checked={selectedAnswers[currentQuestionIndex] === index}
+                          onChange={() =>
+                            setSelectedAnswers((prev) => ({
+                              ...prev,
+                              [currentQuestionIndex]: index,
+                            }))
+                          }
+                        />
+                        <span>{option}</span>
+                      </label>
+                    )
+                  )}
+                </div>
+
+                <div className="navigation-buttons">
+                  <button
+                    onClick={() =>
+                      setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))
+                    }
+                    disabled={currentQuestionIndex === 0}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentQuestionIndex((prev) =>
+                        Math.min(questions.length - 1, prev + 1)
+                      )
+                    }
+                    disabled={currentQuestionIndex === questions.length - 1}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="question-card">
+                <p>No questions available in quiz/quiz.json.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }

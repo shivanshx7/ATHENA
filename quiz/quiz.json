@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "question": "Which of the following is used for local data persistence in React Native?",
+    "options": [
+      "AsyncStorage",
+      "Redux store",
+      "React Context",
+      "Component state"
+    ]
+  },
+  {
+    "id": 2,
+    "question": "What is the primary benefit of using FlatList over ScrollView for rendering large lists in React Native?",
+    "options": [
+      "Lazy rendering of off-screen items for better memory efficiency",
+      "FlatList supports animations while ScrollView does not",
+      "FlatList automatically fetches data from remote APIs",
+      "ScrollView cannot be styled with Flexbox"
+    ]
+  },
+  {
+    "id": 3,
+    "question": "How is data typically communicated from a child component back to a parent component in React?",
+    "options": [
+      "Callback functions passed as props",
+      "Direct mutation of parent state",
+      "HTML hidden input fields",
+      "DOM event bubbles"
+    ]
+  },
+  {
+    "id": 4,
+    "question": "Which hook in React is commonly used to perform side effects like fetching data or setting up subscriptions?",
+    "options": [
+      "useEffect",
+      "useState",
+      "useMemo",
+      "useCallback"
+    ]
+  },
+  {
+    "id": 5,
+    "question": "In React Navigation, which method is typically used to transition to a new screen?",
+    "options": [
+      "navigation.navigate('ScreenName')",
+      "navigation.pushUrl('/screen')",
+      "window.location.href = '/screen'",
+      "navigation.redirectTo('ScreenName')"
+    ]
+  }
+]
