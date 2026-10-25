@@ -9,8 +9,8 @@ function App() {
   const [started, setStarted] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
   
-  // New state to toggle the Exam Details page
   const [showExamDetails, setShowExamDetails] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Quiz state
   const questions = Array.isArray(quizData) ? quizData : quizData.questions || [];
@@ -26,19 +26,30 @@ function App() {
     }
   }
 
+  async function clickPhoto() {
+    if (!ImageCaptureRef.current) return;
+
+    try {
+      const blob = await ImageCaptureRef.current.takePhoto();
+      const buffer = await blob.arrayBuffer();
+      await window.electronAPI.savePhoto(buffer);
+      console.log(blob);
+    } catch (error) {
+      console.error("Failed to capture photo:", error);
+    }
+  }
+
   useEffect(() => {
-    if (!started) return;
+    if (!started || isSubmitted) return;
 
     const interval = setInterval(() => clickPhoto(), 5000);
     const timerInterval = setInterval(() => getLaspedTime(), 1000);
-    
-    getLaspedTime(); // Initial call
 
     return () => {
       clearInterval(interval);
       clearInterval(timerInterval);
     };
-  }, [started]);
+  }, [started, isSubmitted]);
 
   async function getCamera() {
     try {
@@ -55,19 +66,6 @@ function App() {
     } catch (error) {
       console.error("Camera access denied or failed", error);
       alert("Please grant camera permissions to continue.");
-    }
-  }
-
-  async function clickPhoto() {
-    if (!ImageCaptureRef.current) return;
-
-    try {
-      const blob = await ImageCaptureRef.current.takePhoto();
-      const buffer = await blob.arrayBuffer();
-      await window.electronAPI.savePhoto(buffer);
-      console.log(blob);
-    } catch (error) {
-      console.error("Failed to capture photo:", error);
     }
   }
 
@@ -93,10 +91,24 @@ function App() {
     try {
       await window.electronAPI.showExamRules();
       await window.electronAPI.startTest();
+      await getLaspedTime();
       setStarted(true);
     } catch (error) {
       console.error("Failed to start test:", error);
     }
+  }
+
+  function handleSubmitTest() {
+    const confirmSubmit = window.confirm(
+      "Are you sure you want to submit the test?"
+    );
+    if (!confirmSubmit) return;
+
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+    }
+    setIsSubmitted(true);
   }
 
   function formatTimeLeft(ms) {
@@ -108,6 +120,56 @@ function App() {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  // View: Test Completed Screen (no evaluation yet)
+  if (isSubmitted) {
+    return (
+      <div className="test-completed-page">
+        <div className="completed-card">
+          <div className="completed-card-header">
+            <div className="success-icon">✓</div>
+          </div>
+
+          <div className="completed-card-body">
+            <h2>Test Completed!</h2>
+            <p className="completed-subtitle">
+              Your test has been successfully submitted.
+            </p>
+
+            <div className="submission-summary">
+              <div className="summary-stat">
+                <span className="summary-label">Total Questions</span>
+                <p className="summary-value">{questions.length}</p>
+              </div>
+              <div className="summary-stat">
+                <span className="summary-label">Answered</span>
+                <p className="summary-value">
+                  {Object.keys(selectedAnswers).length}
+                </p>
+              </div>
+              <div className="summary-stat">
+                <span className="summary-label">Unanswered</span>
+                <p className="summary-value">
+                  {questions.length - Object.keys(selectedAnswers).length}
+                </p>
+              </div>
+              <div className="summary-stat">
+                <span className="summary-label">Status</span>
+                <p className="summary-value status-badge">Submitted</p>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <span className="info-icon">ℹ️</span>
+              <p>
+                Evaluation is pending. Your responses have been securely recorded. You may now safely exit or close this window.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // View 2: Exam Details Screen
   if (showExamDetails && !started) {
@@ -230,6 +292,9 @@ function App() {
           <div className="exam-container">
             <div className="exam-header">
               <h3>Time Left : {formatTimeLeft(time)}</h3>
+              <button className="end-test-btn" onClick={handleSubmitTest}>
+                Submit Test
+              </button>
             </div>
 
             {currentQuestion ? (
@@ -269,16 +334,22 @@ function App() {
                   >
                     Previous
                   </button>
-                  <button
-                    onClick={() =>
-                      setCurrentQuestionIndex((prev) =>
-                        Math.min(questions.length - 1, prev + 1)
-                      )
-                    }
-                    disabled={currentQuestionIndex === questions.length - 1}
-                  >
-                    Next
-                  </button>
+                  {currentQuestionIndex === questions.length - 1 ? (
+                    <button className="btn-submit-nav" onClick={handleSubmitTest}>
+                      Submit Test
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        setCurrentQuestionIndex((prev) =>
+                          Math.min(questions.length - 1, prev + 1)
+                        )
+                      }
+                      disabled={currentQuestionIndex === questions.length - 1}
+                    >
+                      Next
+                    </button>
+                  )}
                 </div>
               </div>
             ) : (

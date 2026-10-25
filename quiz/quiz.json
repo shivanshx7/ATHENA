@@ -1,52 +1,57 @@
 [
-  {
-    "id": 1,
-    "question": "Which of the following is used for local data persistence in React Native?",
-    "options": [
-      "AsyncStorage",
-      "Redux store",
-      "React Context",
-      "Component state"
-    ]
-  },
-  {
-    "id": 2,
-    "question": "What is the primary benefit of using FlatList over ScrollView for rendering large lists in React Native?",
-    "options": [
-      "Lazy rendering of off-screen items for better memory efficiency",
-      "FlatList supports animations while ScrollView does not",
-      "FlatList automatically fetches data from remote APIs",
-      "ScrollView cannot be styled with Flexbox"
-    ]
-  },
-  {
-    "id": 3,
-    "question": "How is data typically communicated from a child component back to a parent component in React?",
-    "options": [
-      "Callback functions passed as props",
-      "Direct mutation of parent state",
-      "HTML hidden input fields",
-      "DOM event bubbles"
-    ]
-  },
-  {
-    "id": 4,
-    "question": "Which hook in React is commonly used to perform side effects like fetching data or setting up subscriptions?",
-    "options": [
-      "useEffect",
-      "useState",
-      "useMemo",
-      "useCallback"
-    ]
-  },
-  {
-    "id": 5,
-    "question": "In React Navigation, which method is typically used to transition to a new screen?",
-    "options": [
-      "navigation.navigate('ScreenName')",
-      "navigation.pushUrl('/screen')",
-      "window.location.href = '/screen'",
-      "navigation.redirectTo('ScreenName')"
-    ]
-  }
+    {
+        "id": 1,
+        "question": "Which of the following is used to manage state in a React functional component?",
+        "options": [
+            "useEffect",
+            "useState",
+            "useContext",
+            "useReducer"
+        ],
+        "correctAnswer": "useState"
+    },
+    {
+        "id": 2,
+        "question": "What does HTML stand for?",
+        "options": [
+            "Hyper Text Markup Language",
+            "High Text Machine Language",
+            "Hyperlink and Text Markup Language",
+            "Home Tool Markup Language"
+        ],
+        "correctAnswer": "Hyper Text Markup Language"
+    },
+    {
+        "id": 3,
+        "question": "Which keyword is used to declare a variable in JavaScript that cannot be reassigned?",
+        "options": [
+            "var",
+            "let",
+            "const",
+            "static"
+        ],
+        "correctAnswer": "const"
+    },
+    {
+        "id": 4,
+        "question": "In standard data communication, what does HTTP stand for?",
+        "options": [
+            "HyperText Transmission Protocol",
+            "HyperText Transfer Protocol",
+            "High Transfer Text Protocol",
+            "Hyper Transfer Text Protocol"
+        ],
+        "correctAnswer": "HyperText Transfer Protocol"
+    },
+    {
+        "id": 5,
+        "question": "Which CSS property is used to change the background color of an element?",
+        "options": [
+            "color",
+            "bgcolor",
+            "background-color",
+            "background-image"
+        ],
+        "correctAnswer": "background-color"
+    }
 ]
