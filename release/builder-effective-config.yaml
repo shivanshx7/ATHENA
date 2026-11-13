@@ -1,0 +1,15 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.athena.quiz
+productName: ATHENA Quiz
+files:
+  - filter:
+      - dist/**/*
+      - electron/**/*
+      - package.json
+mac:
+  target:
+    - dmg
+  category: public.app-category.education
+electronVersion: 41.10.7

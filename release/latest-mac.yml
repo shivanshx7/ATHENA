@@ -1,0 +1,8 @@
+version: 0.0.0
+files:
+  - url: ATHENA-Quiz-0.0.0-arm64.dmg
+    sha512: dWFo1b5H2aYkyqVm5uFRlqFOIE/WFlDRJ2mZWrLIRl2i8IE/MzHFH7i7TkN4cd4c1r9/S93WP/Owi+SzVDpKgw==
+    size: 115117142
+path: ATHENA-Quiz-0.0.0-arm64.dmg
+sha512: dWFo1b5H2aYkyqVm5uFRlqFOIE/WFlDRJ2mZWrLIRl2i8IE/MzHFH7i7TkN4cd4c1r9/S93WP/Owi+SzVDpKgw==
+releaseDate: '2026-10-25T17:36:39.731Z'

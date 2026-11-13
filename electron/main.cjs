@@ -6,8 +6,7 @@ const {
 } = require("electron");
 
 const path = require("path");
-const { hang } = require("process");
-const fs = require("fs")
+const fs = require("fs");
 let win = null;
 let end_time = null;
 
@@ -24,7 +23,11 @@ function createWindow() {
     },
   });
 
-  win.loadURL("http://localhost:5173/");
+  if (app.isPackaged) {
+    win.loadFile(path.join(__dirname, "../dist/index.html"));
+  } else {
+    win.loadURL("http://localhost:5173/");
+  }
 }
 
 ipcMain.handle("full-screen", () => {
@@ -63,9 +66,11 @@ ipcMain.handle('show-rules',async ()=>{
 })
 
 ipcMain.handle('save-photo',async (_,arrayBuffer)=>{
-  const filePath = path.join(__dirname,'cameraFeed',`${Date.now()}.jpg`)
+  const cameraFeedDirectory = path.join(app.getPath("userData"), "cameraFeed");
+  fs.mkdirSync(cameraFeedDirectory, { recursive: true });
+  const filePath = path.join(cameraFeedDirectory, `${Date.now()}.jpg`);
   const buffer = Buffer.from(arrayBuffer);
-  fs.writeFileSync(filePath,buffer)
+  fs.writeFileSync(filePath, buffer);
 })
 
 app.whenReady().then(() => {
